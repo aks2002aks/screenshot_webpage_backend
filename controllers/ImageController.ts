@@ -33,9 +33,13 @@ async function saveImageAndGetImageUrl(
             resource_type: "image",
           },
           (error, result) => {
-            if (error) reject(error);
-            else if (result) resolve(result);
-            else reject(new Error("Upload result is undefined"));
+            if (result) resolve(result);
+            else {
+              reject(new Error("Upload result is undefined"));
+              res
+                .status(500)
+                .json({ success: false, error: "Internal server error" });
+            }
           }
         );
 
@@ -43,6 +47,9 @@ async function saveImageAndGetImageUrl(
           resp.data.pipe(uploadStream);
         } else {
           reject(new Error("Empty response data from Pikwy API"));
+          res
+            .status(500)
+            .json({ success: false, error: "Internal server error" });
         }
       }
     );
@@ -50,7 +57,9 @@ async function saveImageAndGetImageUrl(
     const imageUrl: string = cloudinaryResponse.secure_url;
     res.status(200).json({ success: true, imageUrl });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Internal server error" + error });
+    res
+      .status(500)
+      .json({ success: false, error: "Internal server error" + error });
   }
 }
 
