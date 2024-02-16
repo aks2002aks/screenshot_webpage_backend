@@ -19,9 +19,7 @@ async function saveImageAndGetImageUrl(
   try {
     const { url } = req.body;
 
-
-    const query = `https://api.pikwy.com?token=${process.env.PIKWY_API_KEY}&url=${url}&response_type=image`;
-
+    const query = `https://api.pikwy.com?token=${process.env.PIKWY_API_KEY}&url=${url}&response_type=image&full_page=1`;
 
     const resp = await axios.get<stream.Readable>(query, {
       responseType: "stream",
@@ -52,7 +50,7 @@ async function saveImageAndGetImageUrl(
     const imageUrl: string = cloudinaryResponse.secure_url;
     res.status(200).json({ success: true, imageUrl });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.status(500).json({ success: false, error: "Internal server error" + error });
   }
 }
 
