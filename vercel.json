@@ -15,5 +15,10 @@
         "Access-Control-Allow-Origin": "*"
       }
     }
-  ]
+  ],
+  "functions": {
+    "api/*": {
+      "timeout": 30
+    }
+  }
 }
