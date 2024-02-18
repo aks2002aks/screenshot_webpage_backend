@@ -2,10 +2,14 @@
 
 import express from "express";
 
-import { saveImageAndGetImageUrl } from "../controllers/ImageController";
+import {
+  getAllImages,
+  saveImageAndGetImageUrl,
+} from "../controllers/ImageController";
 
 const router = express.Router();
 
 router.post("/saveImageAndGetImageUrl", saveImageAndGetImageUrl);
+router.get("/getAllImages", getAllImages);
 
 export default router;
